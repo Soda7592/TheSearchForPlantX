@@ -86,13 +86,3 @@ def MapInit():
 
 MapInit()
 print(map_Index)
-
-
-# def Set_
-
-"""
-prime = [2, 3, 5, 7, 11]
-map= []
-for i in range(2) :
-    x = random.choice(prime)
-"""
