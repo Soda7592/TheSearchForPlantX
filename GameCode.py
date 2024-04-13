@@ -1,3 +1,5 @@
+import random
+
 """
 宇宙有 12 個區域
 
@@ -9,6 +11,88 @@
 - 矮行星與 X 行星不相鄰
 - X 行星被觀察時會以沒有天體的狀態出現
 """
-# 天體 
+# 每片區域只有一個天體
 
-m = [] 
+# 天體
+# 空域 : 0 (2片)
+# 彗星 : 1 (2顆)
+# 矮行星 : 2 (1顆)
+# 星際雲 : 3 (2片)
+# 小行星 : 4 (4顆)
+# X 行星 : 5 (1個)
+
+map = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+map_Index = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+
+
+def Set_comet():
+    prime = [1, 2, 4, 6, 10]
+    x, x_ = (1, 1)
+    while x == x_:
+        x = random.choice(prime)
+        x_ = random.choice(prime)
+    map[x] = 1
+    map[x_] = 1
+    if x not in map_Index or x_ not in map_Index:
+        Set_comet()
+    else:
+        map_Index.remove(x)
+        map_Index.remove(x_)
+
+
+def Set_dwarf():
+    x = random.choice(map_Index)
+    map[x] = 2
+    map_Index.remove(x)
+
+
+def Set_interstellar_cloud():
+    x, x_ = (1, 1)
+    while True:
+        x = random.randint(0, 11)
+        x_ = random.randint(0, 11)
+        if x != x_ and map[x] == 0 and map[x_] == 0:
+            map[x] = 3
+            map[x_] = 3
+            map_Index.remove(x)
+            map_Index.remove(x_)
+            break
+
+
+def Set_X_planet():
+    x = random.choice(map_Index)
+    while map[x - 1] == 2 or map[x - 1] == 2:
+        x = random.choice(map_Index)
+    map[x] = 5
+    map_Index.remove(x)
+
+
+def Set_asteroid():
+    x = 1
+    for i in range(4):
+        x = random.choice(map_Index)
+        map[x] = 4
+        map_Index.remove(x)
+
+
+def MapInit():
+    Set_interstellar_cloud()
+    Set_comet()
+    Set_dwarf()
+    Set_X_planet()
+    Set_asteroid()
+    print(map)
+
+
+MapInit()
+print(map_Index)
+
+
+# def Set_
+
+"""
+prime = [2, 3, 5, 7, 11]
+map= []
+for i in range(2) :
+    x = random.choice(prime)
+"""
