@@ -33,11 +33,8 @@ def Set_comet():
         x_ = random.choice(prime)
     map[x] = 1
     map[x_] = 1
-    if x not in map_Index or x_ not in map_Index:
-        Set_comet()
-    else:
-        map_Index.remove(x)
-        map_Index.remove(x_)
+    map_Index.remove(x)
+    map_Index.remove(x_)
 
 
 def Set_dwarf():
@@ -76,8 +73,8 @@ def Set_asteroid():
 
 
 def MapInit():
-    Set_interstellar_cloud()
     Set_comet()
+    Set_interstellar_cloud()
     Set_dwarf()
     Set_X_planet()
     Set_asteroid()
