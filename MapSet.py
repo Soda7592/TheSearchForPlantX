@@ -23,10 +23,10 @@ import random
 
 map = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 map_Index = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+prime = [1, 2, 4, 6, 10]
 
 
 def Set_comet():
-    prime = [1, 2, 4, 6, 10]
     x, x_ = (1, 1)
     while x == x_:
         x = random.choice(prime)
