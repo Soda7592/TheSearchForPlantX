@@ -85,4 +85,4 @@ def MapInit():
 
 
 MapInit()
-print(map_Index)
+# print(map_Index)
