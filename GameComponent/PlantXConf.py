@@ -1,4 +1,4 @@
-import MapSet
+import GameComponent.MapSet as MapSet
 import random
 
 # 0. X 行星不與 XX 行星正對 (包含小行星/彗星/星際雲)
@@ -6,6 +6,8 @@ import random
 # 2. X 行星不與 XX 行星相鄰 (星際雲/彗星)
 ConfString = []
 StarsMap = ["Comet", "Dwarf", "Interstellar Cloud", "Asteroid"]
+r = random.randint(0, 999)
+random.seed(r)
 # 天體
 # 空域 : 0 (2片)
 # 彗星 : 1 (2顆)
@@ -18,7 +20,7 @@ StarsMap = ["Comet", "Dwarf", "Interstellar Cloud", "Asteroid"]
 def Set_Xconf():
     # conf = random.randint(0, 2)
     index = MapSet.map.index(5)
-    print("index : ", index)
+    # print("index : ", index)
 
     # 0. X 行星不與 XX 行星正對 (包含小行星/彗星/星際雲)
     for i in [1, 3, 4]:
@@ -66,7 +68,7 @@ def Set_Xconf():
 
 Set_Xconf()
 randConf = random.choice(ConfString)
-print(randConf)
+# print(randConf)
 # elif conf == 1 :
 #     targetPlanet = random.choice([1,3,4])
 

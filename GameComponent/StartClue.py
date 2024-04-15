@@ -1,14 +1,22 @@
-import MapSet
+import GameComponent.MapSet as MapSet
 import random
 
+#  import MapSet as MapSet
+
+# print(MapSet.map)
 # print(MapSet.map)
 # 彗星 : 1 (2顆)
 # 矮行星 : 2 (1顆)
 # 星際雲 : 3 (2片)
 # 小行星 : 4 (4顆)
 
+r = random.randint(0, 999)
+random.seed(r)
 
-def GiveClue(val):
+
+def GiveClue():
+    clue = []
+    val = input("Please input a value to get a start clue.....\n> ")
     ExcludeMap = []
     StarsMap = ["Comet", "Dwarf", "Interstellar Cloud", "Asteroid"]
     m = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -26,7 +34,7 @@ def GiveClue(val):
     for i in range(len(ExcludeMap)):
         s = ExcludeMap[i]
         ExcludeMap[i] = "".join(random.sample(s, len(s)))
-    for i in range(val):
+    for i in range(int(val)):
         x = random.randint(0, 11)
         while m[x] > 1:
             x = random.randint(0, 11)
@@ -40,9 +48,10 @@ def GiveClue(val):
         print(
             f"There isn't the {  StarsMap[int(ExcludeMap[m_[i] - 1][0])-1] } in the area {m_[i]}"
         )
+        clue.append(
+            f"There isn't the {  StarsMap[int(ExcludeMap[m_[i] - 1][0])-1] } in the area {m_[i]}"
+        )
         ExcludeMap[m_[i] - 1] = ExcludeMap[m_[i] - 1].replace(
             ExcludeMap[m_[i] - 1][0], ""
         )
-
-
-GiveClue(12)
+    return clue
