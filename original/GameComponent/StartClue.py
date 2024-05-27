@@ -14,12 +14,11 @@ r = random.randint(0, 999)
 random.seed(r)
 
 
-def GiveClue(val):
-    #while val < 0 or val > 12 :
-        #val = input("請輸入要取得的起始線索數量(上限為12個)... \n> ")
-        #val = int(val)
+def GiveClue():
+    clue = []
+    val = input("Please input a value to get a start clue.....\n> ")
     ExcludeMap = []
-    StarsMap = ["花果山", "天庭", "火燄山", "流沙河"]
+    StarsMap = ["Comet", "Dwarf", "Interstellar Cloud", "Asteroid"]
     m = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     m_ = []
     for i in range(12):
@@ -47,12 +46,12 @@ def GiveClue(val):
     # print(m_)
     for i in range(len(m_)):
         print(
-            f"在區域{m_[i]-1}中不存在任何一個{  StarsMap[int(ExcludeMap[m_[i] - 1][0])-1] }"
+            f"There isn't the {  StarsMap[int(ExcludeMap[m_[i] - 1][0])-1] } in the area {m_[i]}"
         )
-        MapSet.AllClues.append(
-            f"在區域{m_[i]-1}中不存在任何一個{  StarsMap[int(ExcludeMap[m_[i] - 1][0])-1] }"
+        clue.append(
+            f"There isn't the {  StarsMap[int(ExcludeMap[m_[i] - 1][0])-1] } in the area {m_[i]}"
         )
         ExcludeMap[m_[i] - 1] = ExcludeMap[m_[i] - 1].replace(
             ExcludeMap[m_[i] - 1][0], ""
         )
-    return MapSet.AllClues
+    return clue

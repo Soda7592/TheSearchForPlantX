@@ -5,9 +5,9 @@ import random
 # 1. X 行星在 XX 行星 2~3 格以內 (包含彗星/星際雲)
 # 2. X 行星不與 XX 行星相鄰 (星際雲/彗星)
 ConfString = []
-StarsMap = ["花果山", "天庭", "火燄山", "流沙河"]
-#r = random.randint(0, 999)
-random.seed(10)
+StarsMap = ["Comet", "Dwarf", "Interstellar Cloud", "Asteroid"]
+r = random.randint(0, 999)
+random.seed(r)
 # 天體
 # 空域 : 0 (2片)
 # 彗星 : 1 (2顆)
@@ -34,9 +34,8 @@ def Set_Xconf():
                 continue
         if establish:
             ConfString.append(
-                f"真經不正對{StarsMap[i-1]}"
-                #f"The X planet is not in the opposite direction of the {StarsMap[i-1]}"            
-)
+                f"The X planet is not in the opposite direction of the {StarsMap[i-1]}"
+            )
 
     # 1. X 行星在 XX 行星 2~3 格以內 (包含小行星/彗星/星際雲)
     for i in [1, 3]:
@@ -51,9 +50,9 @@ def Set_Xconf():
                     establish_3 = True
                     break
         if establish_2:
-            ConfString.append(f"真經在{StarsMap[i-1]}2格以內")
+            ConfString.append(f"The X planet is within 2 grids of the {StarsMap[i-1]}")
         elif establish_3:
-            ConfString.append(f"真經在{StarsMap[i-1]}3格以內")
+            ConfString.append(f"The X planet is within 3 grids of the {StarsMap[i-1]}")
 
     # 2. X 行星不與 XX 行星相鄰 (星際雲/彗星)
     for i in [1, 3]:
@@ -64,15 +63,12 @@ def Set_Xconf():
                     establish = False
                     break
         if establish:
-            ConfString.append(f"真經不與{StarsMap[i-1]}相鄰")
+            ConfString.append(f"The X planet is not adjacent to the {StarsMap[i-1]}")
 
 
 Set_Xconf()
-
-def X() :
-    randConf = random.choice(ConfString)
-    print(randConf)
-    #print(ConfString)
+randConf = random.choice(ConfString)
+# print(randConf)
 # elif conf == 1 :
 #     targetPlanet = random.choice([1,3,4])
 

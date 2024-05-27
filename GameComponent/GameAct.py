@@ -1,5 +1,6 @@
 import GameComponent.MapSet as MapSet
 import random
+import GameComponent.StartClue as clue
 
 # 空域 : 0
 # 彗星 : 1
@@ -9,7 +10,7 @@ import random
 # X 行星 : 5
 
 ReasearchString = [[], [], [], [], []]
-StarsMap = ["empty", "Comet", "Dwarf", "Interstellar Cloud", "Asteroid"]
+StarsMap = ["荒野", "花果山", "天庭", "火燄山", "流沙河"]
 r = random.randint(0, 999)
 random.seed(r)
 
@@ -26,18 +27,18 @@ def Survey(start, end, planet):
         if MapSet.map[i] == planet:
             count += 1
     if count > 1:
-        return f"There are {count} of {StarsMap[planet]}s in area {start} to {end}."
+        return f"區域 {start} 到 {end} 中存在 {count} 座{StarsMap[planet]}"
     elif count == 1:
-        return f"There are {count} of {StarsMap[planet]} in area {start} to {end}."
+        return f"區域 {start} 到 {end} 中存在 {count} 座{StarsMap[planet]}"
     else:
-        return f"There aren't any {StarsMap[planet]}s in area {start} to {end}."
+        return f"區域 {start} 到 {end} 不存在{StarsMap[planet]}"
 
 
 def Scan(area):
     MapSet.months += 4
     if MapSet.map[area] == 5:
-        return f"There is a {StarsMap[0]} in area {area+1}."
-    return f"There is a {StarsMap[MapSet.map[area]]} in area {area+1}."
+        return f"> 存在{StarsMap[0]}"
+    return f"> 存在{StarsMap[MapSet.map[area]]}"
 
 
 def indexs(planet):
@@ -47,6 +48,11 @@ def indexs(planet):
             index.append(i)
     return index
 
+def PlanetNum():
+    print("***********")
+    for i in range(len(StarsMap)) :
+        print(f"{StarsMap[i]}編號為{i}")
+    print("***********\n")
 
 def nearBy(planet):
     PlanetIndex = indexs(planet)
@@ -57,7 +63,7 @@ def nearBy(planet):
                 p[j]
             ):
                 ReasearchString[planet].append(
-                    f"At least a {StarsMap[planet]} is nearby a {StarsMap[int(p[j])]}"
+                    f"至少有一個{StarsMap[planet]} is nearby a {StarsMap[int(p[j])]}"
                 )
 
 
@@ -70,7 +76,7 @@ def nearBy3(planet):
                 p[j]
             ):
                 ReasearchString[planet].append(
-                    f"At least a {StarsMap[planet]} is within three areas of a {StarsMap[int(p[j])]}"
+                    f"至少有一個{StarsMap[planet]}相鄰{StarsMap[int(p[j])]}的距離在三個區域內"
                 )
 
 
@@ -81,7 +87,7 @@ def Direopposite(planet):
         for i in PlanetIndex:
             if MapSet.map[(i + 6) % 12] == int(p[j]):
                 ReasearchString[planet].append(
-                    f"At least {StarsMap[planet]} is in the opposite direction of a {StarsMap[int(p[j])]}"
+                    f"至少有一個{StarsMap[planet]}是正對著{StarsMap[int(p[j])]}"
                 )
 
 
@@ -92,7 +98,7 @@ def NotDireopposite(planet):
         for i in PlanetIndex:
             if MapSet.map[(i + 6) % 12] != int(p[j]):
                 ReasearchString[planet].append(
-                    f"All {StarsMap[planet]} isn't in the opposite direction of a {StarsMap[int(p[j])]}"
+                    f"所有的{StarsMap[planet]}皆不在{StarsMap[int(p[j])]}的對面"
                 )
             else:
                 break
@@ -110,20 +116,91 @@ def Research():
 
 def SubmitPaper(area, planet):
     if MapSet.map[area] == planet:
-        MapSet.months -= 2
-        return "Correct"
+        if MapSet.Health_3 < 3 :
+            MapSet.Health_3 += 1
+        return "\n正確，唐三藏回復了一點血量\n"
     else:
         MapSet.months += 2
-        return "Incorrect"
+        return "\n不正確\n"
 
+def randMonster() :
+    monster = random.randint(0, 1000)
+    if monster <= 650 and MapSet.IsMonster == False:
+        MapSet.IsMonster = True
+        print("\n出現妖怪! 請保護唐三藏\n")       
+
+def AttackMonster() :
+    if MapSet.IsMonster == True:
+        MapSet.IsMonster = False
+        print("\n成功擊退妖怪\n")
+    elif MapSet.IsMonster == False:
+        print("\n沒有妖怪啊，你在幹嘛= = ?\n")
+    MapSet.months += 2    
+
+def Survey_5(start, end, planet) :
+    s = random.randint(0, 1000)
+    if s <= 600 :
+        print('\n\033[31m',Survey(start, end, planet),'\033[0m')
+        area = random.randint(0,11)
+        if MapSet.map[area] == 5 :                                                 print(f"探查超成功!我還知道了區域{area}是{StarsMap[MapSet.map[0]]}\n")
+        else :
+            print(f"探查超成功!我還知道了區域{area}是{StarsMap[MapSet.map[area]]}\n")
+    else :
+        MapSet.months += 4
+        print("\n失敗，這次的搜索一點幫助都沒有\n")
+
+def Scan_5(area) :
+    s = random.randint(0, 1000)
+    if s<= 600 :
+        print('\n\033[31m',Scan(area), '\033[0m')
+        area = random.randint(0, 11)
+        if MapSet.map[area] == 5 :
+            print(f"探查超成功!我還知道了區域{area}是{StarsMap[MapSet.map[0]]}\n")
+        else :
+            print(f"探查超成功!我還知道了區域{area}是{StarsMap[MapSet.map[area]]}\n")
+    else :
+        MapSet.months += 4
+        print("\n失敗，這次的搜索一點幫助都沒有\n")
+
+def Survey_8(start, end, planet) :
+    s = random.randint(0, 1000)
+    if s <= 600 :
+        print('\n\033[31m', Survey(start, end, planet), '\033[0m')
+        print(f"探查成功!\n")
+    else :
+        MapSet.months += 4
+        print("\n失敗，這次的搜索一點幫助都沒有\n")
+        print("豬八戒 : ", random.choice(MapSet.fuckingwords))
+
+def Scan_8(area) :
+    s = random.randint(0, 1000)
+    if s <= 600 :
+        print('\n\033[31m',Scan(area),'\033[0m')
+        print("探查成功\n")
+    else :
+        MapSet.months += 4
+        print("\n失敗，這次的搜索一點幫助都沒有\n")
+        print("豬八戒 : ", random.choice(MapSet.fuckingwords))
+
+def DrawMap(area, planet) :
+    area -= 1
+    MapSet.months += 1
+    MapSet.MapBy_7[area] = planet
+    
+def GetClue():
+    clue.GiveClue(1)
+    #MapSet.months += 2
+    #print("GetClue !")
+    print("\n")
+    return MapSet.AllClues
 
 def PointOutX(index, LeftNear, RightNear):
     MapSet.months += 5
     index_ = MapSet.map.index(5)
     LeftNear_ = MapSet.map[(index_ - 1) % 12]
     RightNear_ = MapSet.map[(index_ + 1) % 12]
-    print(index_ + 1, " ", LeftNear_, " ", RightNear_)
-    if index == index_ + 1 and LeftNear == LeftNear_ and RightNear == RightNear_:
+    #print(index_ + 1, " ", LeftNear_, " ", RightNear_)
+    if index == index_ and LeftNear == LeftNear_ and RightNear == RightNear_:
         return True
     else:
         return False
